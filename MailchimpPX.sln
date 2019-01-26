@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Theta", "http://localhost/Theta", "{3500C117-9B45-4567-BED1-4481783A6337}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.1"
+		Debug.AspNetCompiler.VirtualPath = "/Theta"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\Program Files (x86)\Acumatica ERP\Theta\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Theta\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Theta"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\Program Files (x86)\Acumatica ERP\Theta\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Theta\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\..\..\..\..\Program Files (x86)\Acumatica ERP\Theta\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailchimpPX", "MailchimpPX\MailchimpPX.csproj", "{641754A2-C76D-4D7D-9070-F1496FC27332}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3500C117-9B45-4567-BED1-4481783A6337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3500C117-9B45-4567-BED1-4481783A6337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3500C117-9B45-4567-BED1-4481783A6337}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{3500C117-9B45-4567-BED1-4481783A6337}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{641754A2-C76D-4D7D-9070-F1496FC27332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641754A2-C76D-4D7D-9070-F1496FC27332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641754A2-C76D-4D7D-9070-F1496FC27332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641754A2-C76D-4D7D-9070-F1496FC27332}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF06EEDB-9D2A-45E3-95D8-521DC000ECB2}
+	EndGlobalSection
+EndGlobal
