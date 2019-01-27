@@ -1,38 +1,38 @@
-﻿<Page path="~/pages/cr/cr306010.aspx" ControlId="5" pageSource="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">
+﻿<Page path="~/pages/cr/cr306010.aspx" ControlId="11" pageSource="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">
     <PXPanel ID="PXPanel1" ParentId="phF_form_PXPanel1" TypeFullName="PX.Web.UI.PXPanel">
         <Children Key="Controls">
             <AddItem>
                 <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
                     <Prop Key="Virtual:ApplyStylesheetSkin" />
-                    <Prop Key="ID" Value="CstPXTextEdit5" />
+                    <Prop Key="ID" Value="CstPXTextEdit11" />
+                    <Prop Key="DataField" Value="UsrMCType" />
+                </PXTextEdit>
+            </AddItem>
+            <AddItem>
+                <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
+                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                    <Prop Key="ID" Value="CstPXTextEdit10" />
                     <Prop Key="DataField" Value="UsrMCTimestamp" />
                 </PXTextEdit>
             </AddItem>
             <AddItem>
                 <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
                     <Prop Key="Virtual:ApplyStylesheetSkin" />
-                    <Prop Key="ID" Value="CstPXTextEdit4" />
-                    <Prop Key="DataField" Value="UsrMCClickUrl" />
-                </PXTextEdit>
-            </AddItem>
-            <AddItem>
-                <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
-                    <Prop Key="Virtual:ApplyStylesheetSkin" />
-                    <Prop Key="ID" Value="CstPXTextEdit3" />
+                    <Prop Key="ID" Value="CstPXTextEdit9" />
                     <Prop Key="DataField" Value="UsrMCCampaignID" />
                 </PXTextEdit>
             </AddItem>
             <AddItem>
                 <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
                     <Prop Key="Virtual:ApplyStylesheetSkin" />
-                    <Prop Key="ID" Value="CstPXTextEdit2" />
+                    <Prop Key="ID" Value="CstPXTextEdit8" />
                     <Prop Key="DataField" Value="UsrMCAction" />
                 </PXTextEdit>
             </AddItem>
             <AddItem>
                 <PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
                     <Prop Key="Virtual:ApplyStylesheetSkin" />
-                    <Prop Key="ID" Value="CstPXCheckBox1" />
+                    <Prop Key="ID" Value="CstPXCheckBox7" />
                     <Prop Key="DataField" Value="UsrIsMailchimp" />
                 </PXCheckBox>
             </AddItem>

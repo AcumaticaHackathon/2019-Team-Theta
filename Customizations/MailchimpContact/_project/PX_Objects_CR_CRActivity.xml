@@ -13,12 +13,13 @@
         <CDATA name="TextAttributes"><![CDATA[[PXDBString]
 [PXUIField(DisplayName="MC Timestamp")]]]></CDATA>
     </Field>
-    <Field FieldName="UsrMCClickUrl" TypeName="string" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
-        <CDATA name="TextAttributes"><![CDATA[[PXDBString]
-[PXUIField(DisplayName="MC Click Url")]]]></CDATA>
-    </Field>
     <Field FieldName="UsrMCCampaignID" TypeName="string" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
         <CDATA name="TextAttributes"><![CDATA[[PXDBString]
 [PXUIField(DisplayName="MC Campaign ID")]]]></CDATA>
+    </Field>
+    <Field FieldName="UsrMCType" TypeName="string" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXDBString]
+[PXUIField(DisplayName="MC Type")]
+]]></CDATA>
     </Field>
 </DAC>
