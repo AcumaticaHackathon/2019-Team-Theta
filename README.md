@@ -6,10 +6,13 @@ Acumatica Hackathon Team Theta 2019
 
     using MailchimpPX;
 
-    var manager = new MailchimpPXManager([api key])
-	List<MCList> lists = manager.GetLists()
+    var manager = new MailchimpPXManager([api key]);
 	
+	List<MCList> lists = manager.GetLists();
 	// MCList.Id, MCList.Name
 	
-	IEnumerable<Activity> activity = manager.GetActivities("asdf6789", "jeremy@example.com")
+	manager.GetMember("asdf6789", "jeremy@example.com");
+	// returns Mailchimp.Net.Models.Member
+	
+	List<Activity> activity = manager.GetActivities("asdf6789", "jeremy@example.com");
 	// returns Mailchimp.Net.Models.Activity

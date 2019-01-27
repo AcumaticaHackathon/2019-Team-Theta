@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using MailChimp.Net;
-using MailChimp.Net.Core;
+using MailChimp.Net.Models;
       
 namespace MailchimpPX
 {
     public class MailchimpPXManager
     {
-        private readonly MailChimp.Net.MailChimpManager manager;
+        private readonly MailChimpManager manager;
 
         public MailchimpPXManager(string apiKey)
         {
@@ -28,18 +29,41 @@ namespace MailchimpPX
             return result;
         }
 
+        public Member GetMember(string listId, string email)
+        {
+            var email_md5 = CalculateMD5Hash(email);
+            Member member;
+            try
+            {
+                member = Task.Run(async () => await manager.Members.GetAsync(listId, email_md5)).Result;
+            } catch (AggregateException ae)
+            {
+                throw ae.InnerException;
+            }
+            return member;
+        }
+
         /*public void AddEmailToList(string email, string listID, string first_name, string last_name)
         {
             
         }
         */
-        public IEnumerable<MailChimp.Net.Models.Activity> GetActivities(string listId, string email)
+        public List<Activity> GetActivities(string listId, string email)
         {
             var email_md5 = CalculateMD5Hash(email);
-            var mc_activities = Task.Run(async () => await manager.Members.GetActivitiesAsync(listId, email_md5)).Result;
-            return mc_activities;
+            IEnumerable<Activity> mc_activities;
+            try
+            {
+                mc_activities = Task.Run(async () => await manager.Members.GetActivitiesAsync(listId, email_md5)).Result;
+            } catch (AggregateException ae)
+            {
+                throw ae.InnerException;
+            }
+            
+            return mc_activities.ToList();
         }
-        
+
+        // From https://blogs.msdn.microsoft.com/csharpfaq/2006/10/09/how-do-i-calculate-a-md5-hash-from-a-string/
         private string CalculateMD5Hash(string input)
         {
             // step 1, calculate MD5 hash from input
