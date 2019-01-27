@@ -1,0 +1,187 @@
+﻿<Graph ClassName="ContactMaint" Source="#CDATA" IsNew="True" FileType="ExistingGraph">
+    <CDATA name="Source"><![CDATA[using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using PX.Common;
+using PX.Data;
+using PX.Objects.AR;
+using PX.Objects.CR.MassProcess;
+using PX.Objects.GL;
+using PX.Objects.CS;
+using PX.Objects.EP;
+using PX.SM;
+using PX.Objects;
+using PX.Objects.CR;
+using MailchimpPX;
+using mailChimpAddListtoContactScreen;
+
+namespace PX.Objects.CR
+{
+  public class ContactMaint_Extension : PXGraphExtension<ContactMaint>
+  {
+    
+ 
+        public PXSelect<MailChimpListAvailable> MailChimpLists;
+
+        public PXSelect<MailChimpListSubscribedTo> MailChimpListsSubscribed;[PXHidden]
+
+        public PXSelect<CRSetup> Setup;
+
+
+        public PXAction<Contact> getChimpList;
+        [PXUIField(DisplayName="Get Chimp List", MapEnableRights=PXCacheRights.Select, MapViewRights=PXCacheRights.Select)]
+         [PXButton]
+         public virtual IEnumerable GetChimpList(PXAdapter adapter)
+          {
+          
+            CRSetup setup = Base.Setup.Current;
+            CRSetupExt setupExt = setup.GetExtension<CRSetupExt>();
+
+            var apiKey = setupExt.UsrMailchimpAPIKey;
+            var manager = new MailchimpPXManager(apiKey);
+            List<MCList> lists = manager.GetLists();
+
+            foreach (MCList list in lists)
+            {
+                var listAvail = new MailChimpListAvailable();
+                listAvail.Listid = list.ID;
+                listAvail.ListName = list.Name;
+
+                listAvail = MailChimpLists.Insert(listAvail);
+            }
+
+            Base.Actions.PressSave();
+          
+          
+          return adapter.Get();
+          
+          
+          
+          }
+                     
+        public PXAction<Contact> getChimpMembership;
+        [PXUIField(DisplayName = "Get Chimp Membership", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        public virtual IEnumerable GetChimpMembership(PXAdapter adapter)
+        {
+            
+            CRSetup setup = Base.Setup.Current;
+            CRSetupExt setupExt = setup.GetExtension<CRSetupExt>();
+
+            var apiKey = setupExt.UsrMailchimpAPIKey;
+            var manager = new MailchimpPXManager(apiKey);
+
+            Contact contact = Base.Contact.Current;
+                                                
+            List<MCList> lists = manager.GetLists();
+
+            foreach (MailChimpListAvailable list in MailChimpLists.Select())
+            {
+                 var mcMember = manager.GetMember(list.Listid, contact.EMail);
+
+                 var member = new MailChimpListSubscribedTo();
+                member.Listid = list.Listid;
+                member.ContactID = contact.ContactID;
+                member.ListName = list.ListName;
+                 member.SubscribedStatus = mcMember.Status.ToString();
+
+                member = MailChimpListsSubscribed.Insert(member);
+
+            }
+                        
+            Base.Actions.PressSave();
+
+            return adapter.Get();
+
+        }
+                     
+                     List<MailChimp.Net.Models.Activity> activityList = new List<MailChimp.Net.Models.Activity>();
+
+        
+        public PXAction<PX.Objects.CR.Contact> SyncMCActivities;
+
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Sync MC Activities")]
+        protected void syncMCActivities()
+        {
+          CRSetup setup = Base.Setup.Current;
+            CRSetupExt setupExt = setup.GetExtension<CRSetupExt>();
+
+            var apiKey = setupExt.UsrMailchimpAPIKey;
+            var manager = new MailchimpPXManager(apiKey);
+            try
+            {
+                PXLongOperation.StartOperation(Base, delegate
+                {
+                    
+                   // foreach (MailChimpListSubscribedTo list in MailChimpListsSubscribed.Select())
+                   // {
+                        var activities = manager.GetActivities("866ccb130c", Base.Contact.Current.EMail);
+                        if (activities != null)
+                        {
+                            CRActivityMaint graph = PXGraph.CreateInstance<CRActivityMaint>();
+                            registerActivities(activities.ToList(), graph, Base);
+                        }
+                    //}
+          //var activities = manager.GetActivities("8951f9ff7b", "cesarbetancesfelix@gmail.com");
+
+            //        if (activities != null)
+              //      {
+                //        CRActivityMaint graph = PXGraph.CreateInstance<CRActivityMaint>();
+                  //      registerActivities(activities.ToList(), graph, Base);
+           //         }
+                });
+
+                
+            }
+            catch (Exception ex)
+            {
+                string err = ex.InnerException.ToString();
+                throw ex;
+            }
+        }
+
+        public bool activityExist(MailChimp.Net.Models.Activity activity, ContactMaint baseGraph)
+        {
+            foreach (CRActivity acumaticaActivity in baseGraph.Activities.Select())
+            {
+                CRActivityExt acumaticaActivityExt = acumaticaActivity.GetExtension<CRActivityExt>();
+                if (activity.Timestamp == acumaticaActivityExt.UsrMCTimestamp)
+                    return true;
+            }
+            return false;
+        }
+
+        public void registerActivities(List<MailChimp.Net.Models.Activity> result, CRActivityMaint graph, ContactMaint baseGraph)
+        {
+            bool isInserted = false;
+            foreach (MailChimp.Net.Models.Activity activity in result)
+            {
+                //Check if it already exist by UsrMCTimestamp
+                if (!activityExist(activity, baseGraph))
+                {
+                    //Insert Activity to Acumatica
+                    CRActivity cRActivity = new CRActivity();
+                    cRActivity.NoteID = baseGraph.Contact.Current.NoteID;
+                    cRActivity.Subject = activity.Title;
+                    cRActivity.ContactID = baseGraph.Contact.Current.ContactID;
+                    cRActivity.BAccountID = baseGraph.Contact.Current.BAccountID;
+                    CRActivityExt acumaticaActivityExt = PXCache<CRActivity>.GetExtension<CRActivityExt>(cRActivity);
+                    acumaticaActivityExt.UsrMCAction = activity.Action;
+                    acumaticaActivityExt.UsrMCCampaignID = activity.CampaignId;
+                    acumaticaActivityExt.UsrMCTimestamp = activity.Timestamp;
+                    acumaticaActivityExt.UsrMCType= activity.Type;
+                    acumaticaActivityExt.UsrIsMailchimp = true;
+                    cRActivity = graph.Activities.Insert(cRActivity);
+                    isInserted = true;
+                }
+            }
+            if (isInserted)
+                graph.Actions.PressSave();
+        }
+
+
+  }
+}]]></CDATA>
+</Graph>
