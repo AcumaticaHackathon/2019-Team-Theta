@@ -1,5 +1,5 @@
 ﻿<Graph ClassName="ContactMaintPXExt" Source="#CDATA" IsNew="True" FileType="NewFile">
-    <CDATA name="Source"><![CDATA[using System;
+    <CDATA name="Source"><![CDATA[/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +16,24 @@ using PX.Objects.CR;
 using MailchimpPX;
 using MailChimp.Net;
 using System.Threading.Tasks;
+using mailChimpAddListtoContactScreen;
 
 namespace PX.Objects.CR
 {
-    public class ContactMaintPXExt: PXGraphExtension<ContactMaint>
-    {
-        const string apiKey = "aa84401c1909e45216e6f5829519f140-us20";
+    public class ContactMaintPXExt: PXGraphExtension<ContactMaint_Extension, ContactMaint>
+    {  
+       public PXSelect<CRSetup> Setup;
+
+        CRSetup setup = Base.Setup.Current;
+        CRSetupExt setupExt = setup.GetExtension<CRSetupExt>();
+
+        string apiKey = setupExt.UsrMailchimpAPIKey;  
+  
+        //const string apiKey = "3d476b61b49debe40594e27f217b1913-us20";
         MailchimpPXManager manager = new MailchimpPXManager(apiKey);
         List<MailChimp.Net.Models.Activity> activityList = new List<MailChimp.Net.Models.Activity>();
 
-        #region Event Handlers
-
+        
         public PXAction<PX.Objects.CR.Contact> SyncMCActivities;
 
         [PXButton(CommitChanges = true)]
@@ -37,7 +44,17 @@ namespace PX.Objects.CR
             {
                 PXLongOperation.StartOperation(Base, delegate
                 {
-                    var activities = manager.GetActivities("8951f9ff7b", "cesarbetancesfelix@gmail.com");
+                    
+                    foreach (mailChimpAddListtoContactScreen.MailChimpListSubscribedTo list in mailChimpAddListtoContactScreen.MailChimpListsSubscribed.Select())
+                    {
+                        var activities = manager.GetActivities(list.Listid, Base.Contact.Current.EMail);
+                        if (activities != null)
+                        {
+                            CRActivityMaint graph = PXGraph.CreateInstance<CRActivityMaint>();
+                            registerActivities(activities.ToList(), graph, Base);
+                        }
+                    }
+          var activities = manager.GetActivities("8951f9ff7b", "cesarbetancesfelix@gmail.com");
 
                     if (activities != null)
                     {
@@ -51,6 +68,7 @@ namespace PX.Objects.CR
             catch (Exception ex)
             {
                 string err = ex.InnerException.ToString();
+                throw ex;
             }
         }
 
@@ -92,7 +110,6 @@ namespace PX.Objects.CR
             if (isInserted)
                 graph.Actions.PressSave();
         }
-        #endregion 
     }
-}]]></CDATA>
+}*/]]></CDATA>
 </Graph>
