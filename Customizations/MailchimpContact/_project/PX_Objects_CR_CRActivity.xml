@@ -1,0 +1,24 @@
+﻿<DAC type="PX.Objects.CR.CRActivity">
+    <Field FieldName="UsrIsMailchimp" TypeName="bool" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXDBBool]
+[PXUIField(DisplayName="IsMailchimp")]
+]]></CDATA>
+    </Field>
+    <Field FieldName="UsrMCAction" TypeName="string" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXDBString]
+[PXUIField(DisplayName="MC Action")]
+]]></CDATA>
+    </Field>
+    <Field FieldName="UsrMCTimestamp" TypeName="string" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXDBString]
+[PXUIField(DisplayName="MC Timestamp")]]]></CDATA>
+    </Field>
+    <Field FieldName="UsrMCClickUrl" TypeName="string" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXDBString]
+[PXUIField(DisplayName="MC Click Url")]]]></CDATA>
+    </Field>
+    <Field FieldName="UsrMCCampaignID" TypeName="string" MapDbTable="CRActivity" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXDBString]
+[PXUIField(DisplayName="MC Campaign ID")]]]></CDATA>
+    </Field>
+</DAC>

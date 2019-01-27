@@ -1,0 +1,33 @@
+﻿<Graph ClassName="CRActivityMaint" Source="#CDATA" IsNew="True" FileType="ExistingGraph">
+    <CDATA name="Source"><![CDATA[using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using PX.Common;
+using PX.CS;
+using PX.Data.EP;
+using PX.Objects.CR;
+using PX.Data;
+using System;
+using System.Collections;
+using PX.Objects.GL;
+using PX.Objects.PM;
+using PX.Objects.CS;
+using PX.Objects;
+using PX.Objects.EP;
+using MailChimp.Net.Interfaces;
+using MailChimp.Net.Core;
+using MailChimp.Net;
+
+using System.Threading.Tasks;
+
+namespace PX.Objects.EP
+{
+  public class CRActivityMaint_Extension : PXGraphExtension<CRActivityMaint>
+  {
+        
+
+
+        
+    }
+}]]></CDATA>
+</Graph>
