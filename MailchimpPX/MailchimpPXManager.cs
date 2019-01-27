@@ -40,14 +40,43 @@ namespace MailchimpPX
             {
                 throw ae.InnerException;
             }
+            
             return member;
         }
 
-        /*public void AddEmailToList(string email, string listID, string first_name, string last_name)
+        public Member AddEmailToList(string email, string listID, string first_name, string last_name, int ContactID)
         {
+            var member = new Member
+            {
+                EmailAddress = email,
+                ListId = listID,
+                MergeFields = new Dictionary<string, object>
+                {
+                    { "FNAME", first_name },
+                    { "LNAME", last_name }
+                }
+            };
+            return AddEmailToList(listID, member, ContactID);
             
         }
-        */
+
+        public Member AddEmailToList(string listID, Member member, int ContactID)
+        {
+            member.MergeFields["ContactID"] = ContactID;
+            member.TimestampSignup = DateTime.UtcNow.ToString("s");
+            member.StatusIfNew = Status.Subscribed;
+            try
+            {
+                member = Task.Run(async () => await manager.Members.AddOrUpdateAsync(listID, member)).Result;
+            }
+            catch (AggregateException ae)
+            {
+                throw ae.InnerException;
+            }
+
+            return member;
+        }
+        
         public List<Activity> GetActivities(string listId, string email)
         {
             var email_md5 = CalculateMD5Hash(email);
@@ -64,7 +93,7 @@ namespace MailchimpPX
         }
 
         // From https://blogs.msdn.microsoft.com/csharpfaq/2006/10/09/how-do-i-calculate-a-md5-hash-from-a-string/
-        private string CalculateMD5Hash(string input)
+        protected string CalculateMD5Hash(string input)
         {
             // step 1, calculate MD5 hash from input
 
